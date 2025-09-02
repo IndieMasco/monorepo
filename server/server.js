@@ -13,6 +13,7 @@ const PORT = 8080;
 app.listen(PORT, function () {
   console.info(` Server is running in port ${PORT}`);
 });
+
 //set up a root route
 //TODO: Read data in this route
 app.get("/", function (req, res) {
