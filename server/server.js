@@ -37,3 +37,10 @@ app.get("/staff-names", async function (req, res) {
   const query = await db.query(`SELECT name FROM staff;`);
   res.json(query.rows);
 });
+
+//========================================================
+
+app.get("/games", async function (req, res) {
+  const query  = await db.query(`SELECT * FROM games;`)
+  res.json(query.rows);
+});
