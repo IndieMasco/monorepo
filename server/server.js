@@ -47,16 +47,16 @@ app.get("/", function (req, res) {
 
 //========================================================
 
-// TODO: READ all staff data in the database with name "manny"
+// // TODO: READ all staff data in the database with name "manny"
 
-app.get("/staff-manny", (req, res) => {
-  // Query the database
-  const query = db.query(`SELECT * FROM staff WHERE name = $1;`, [
-    // Do not add values directly here
-    "Manny",
-  ]);
-  res.json(query.rows);
-});
+// app.get("/staff-manny", (req, res) => {
+//   // Query the database
+//   const query = db.query(`SELECT * FROM staff WHERE name = $1;`, [
+//     // Do not add values directly here
+//     "Manny",
+//   ]);
+//   res.json(query.rows);
+// });
 
 // TODO: Create (POST) new data in the staabase
 app.post("/add-staff", (req, res) => {
