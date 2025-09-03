@@ -21,42 +21,46 @@ app.get("/", function (req, res) {
   res.json({ message: "Welcome to the server. GET comfy" });
 });
 
-// //TODO: I want to READ all the data from the staff table
-// // http://localhost:8080/staff --> endpoint, params
-// app.get("/staff", async function (req, res) {
-//   //we need to query our database here
-//   const query = await db.query(`SELECT * FROM staff;`);
-//   console.log(query);
-//   //parse data into JSON and wrangle data
-//   res.json(query.rows);
-// });
+// ========================================================
 
-// //TODO: I want to READ all the names from the staff table
+// TODO: I want to READ all the data from the staff table
+// http://localhost:8080/staff --> endpoint, params
+app.get("/staff", async function (req, res) {
+  //we need to query our database here
+  const query = await db.query(`SELECT * FROM staff;`);
+  console.log(query);
+  //parse data into JSON and wrangle data
+  res.json(query.rows);
+});
 
-// app.get("/staff-names", async function (req, res) {
-//   const query = await db.query(`SELECT name FROM staff;`);
-//   res.json(query.rows);
-// });
+// TODO: I want to READ all the names from the staff table
 
-// //========================================================
+app.get("/staff-names", async function (req, res) {
+  const query = await db.query(`SELECT name FROM staff;`);
+  res.json(query.rows);
+});
+
+// ========================================================
 
 // app.get("/games", async function (req, res) {
-//   const query  = await db.query(`SELECT * FROM games;`)
+//   const query = await db.query(`SELECT * FROM games;`);
 //   res.json(query.rows);
 // });
 
 //========================================================
 
-// // TODO: READ all staff data in the database with name "manny"
-
-// app.get("/staff-manny", (req, res) => {
-//   // Query the database
-//   const query = db.query(`SELECT * FROM staff WHERE name = $1;`, [
-//     // Do not add values directly here
-//     "Manny",
-//   ]);
-//   res.json(query.rows);
-// });
+// TODO: READ all staff data in the database with name "Manny"
+app.get("/staff-manny", async (_, res) => {
+  //query the database
+  const query = await db.query(
+    `SELECT name, location, age, role FROM staff WHERE name = $1`,
+    [
+      //do not add values directly here, this is for demo purposes
+      "Manny",
+    ]
+  );
+  res.json(query.rows);
+});
 
 // TODO: Create (POST) new data in the staabase
 app.post("/add-staff", (req, res) => {
@@ -69,4 +73,13 @@ app.post("/add-staff", (req, res) => {
     [newStaff.name, newStaff.location, newStaff.age, newStaff.role]
   );
   res.json("Data sent", query);
+});
+
+//========================================================
+
+// TODO: Workshop - Querying a database from an Express endpoint
+
+app.get("/games", async function (request, response) {
+  const games = await db.query("SELECT * FROM games");
+  response.json(games.rows);
 });
