@@ -70,7 +70,12 @@ app.post("/add-staff", (req, res) => {
   // In our SQL queries, we can have a placeholder (parameter) that we will replace with the actual values when the client sends them
   const query = db.query(
     `INSERT INTO staff (name, location, age, role) VALUES ($1, $2, $3, $4)`,
-    [newStaff.name, newStaff.location, newStaff.age, newStaff.role]
+    [
+      newStaff.formValues.name,
+      newStaff.formValues.location,
+      newStaff.formValues.age,
+      newStaff.formValues.role,
+    ]
   );
   res.json("Data sent", query);
 });
@@ -83,3 +88,5 @@ app.get("/games", async function (request, response) {
   const games = await db.query("SELECT * FROM games");
   response.json(games.rows);
 });
+
+//========================================================
