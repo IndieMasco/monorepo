@@ -21,26 +21,52 @@ app.get("/", function (req, res) {
   res.json({ message: "Welcome to the server. GET comfy" });
 });
 
-//TODO: I want to READ all the data from the staff table
-// http://localhost:8080/staff --> endpoint, params
-app.get("/staff", async function (req, res) {
-  //we need to query our database here
-  const query = await db.query(`SELECT * FROM staff;`);
-  console.log(query);
-  //parse data into JSON and wrangle data
-  res.json(query.rows);
-});
+// //TODO: I want to READ all the data from the staff table
+// // http://localhost:8080/staff --> endpoint, params
+// app.get("/staff", async function (req, res) {
+//   //we need to query our database here
+//   const query = await db.query(`SELECT * FROM staff;`);
+//   console.log(query);
+//   //parse data into JSON and wrangle data
+//   res.json(query.rows);
+// });
 
-//TODO: I want to READ all the names from the staff table
+// //TODO: I want to READ all the names from the staff table
 
-app.get("/staff-names", async function (req, res) {
-  const query = await db.query(`SELECT name FROM staff;`);
-  res.json(query.rows);
-});
+// app.get("/staff-names", async function (req, res) {
+//   const query = await db.query(`SELECT name FROM staff;`);
+//   res.json(query.rows);
+// });
+
+// //========================================================
+
+// app.get("/games", async function (req, res) {
+//   const query  = await db.query(`SELECT * FROM games;`)
+//   res.json(query.rows);
+// });
 
 //========================================================
 
-app.get("/games", async function (req, res) {
-  const query  = await db.query(`SELECT * FROM games;`)
+// TODO: READ all staff data in the database with name "manny"
+
+app.get("/staff-manny", (req, res) => {
+  // Query the database
+  const query = db.query(`SELECT * FROM staff WHERE name = $1;`, [
+    // Do not add values directly here
+    "Manny",
+  ]);
   res.json(query.rows);
+});
+
+// TODO: Create (POST) new data in the staabase
+app.post("/add-staff", (req, res) => {
+  // An element to store the data coming from the client
+  const newStaff = req.body;
+  // Database query
+  // In our SQL queries, we can have a placeholder (parameter) that we will replace with the actual values when the client sends them
+  const query = db.query(
+    `INSERT INTO staff (name, location, age, role) VALUES ($1, $2, $3, $4)`,
+    [newStaff.name, newStaff.location, newStaff.age, newStaff.role]
+  );
+  res.json("Data sent", query);
 });
